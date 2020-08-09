@@ -7,4 +7,11 @@ import { Component } from '@angular/core';
   //styles: []
   styleUrls: ['property-card.component.css']
 })
-export class PropertyCardComponent { }
+export class PropertyCardComponent {
+  Property: any = {
+    "Id": 1,
+    "Name": "PB Dungeon",
+    "Type": "House",
+    "Price": 120000
+  }
+}
