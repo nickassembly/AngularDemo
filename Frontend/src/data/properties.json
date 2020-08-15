@@ -1,38 +1,57 @@
 [
   {
     "Id": 1,
+    "SellRent": 1,
     "Name": "PB Dungeon",
     "Type": "House",
-    "Price": 120000
+    "Price": 120000,
+    "Image": "prop-1"
   },
   {
     "Id": 2,
+    "SellRent": 1,
     "Name": "Keller Cave",
     "Type": "House",
-    "Price": 67000
+    "Price": 67000,
+    "Image": "prop-2"
   },
   {
     "Id": 3,
+    "SellRent": 2,
     "Name": "Burger Mansion",
     "Type": "House",
-    "Price": 1000000
+    "Price": 1000000,
+    "Image": "prop-3"
   },
   {
     "Id": 4,
+    "SellRent": 2,
     "Name": "Georgia House",
     "Type": "House",
-    "Price": 86000
+    "Price": 86000,
+    "Image": "prop-4"
   },
   {
     "Id": 5,
+    "SellRent": 1,
     "Name": "Idaho House",
     "Type": "House",
-    "Price": 12000
+    "Price": 12000,
+    "Image": "prop-5"
   },
   {
     "Id": 6,
+    "SellRent": 2,
     "Name": "Walmart Store",
     "Type": "House",
-    "Price": 900000
+    "Price": 900000,
+    "Image": "prop-6"
+  },
+  {
+    "Id": 6,
+    "SellRent": 2,
+    "Name": "Fixer House",
+    "Type": "House",
+    "Price": 50000
   }
 ]
