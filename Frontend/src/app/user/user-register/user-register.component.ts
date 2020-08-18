@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-user-register',
@@ -9,16 +9,23 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 export class UserRegisterComponent implements OnInit {
 
   registrationForm: FormGroup;
-  constructor() { }
+  constructor(private fb: FormBuilder) { }
 
   ngOnInit(): void {
     this.registrationForm = new FormGroup({
-      userName: new FormControl('', Validators.required),
+      userName: new FormControl(null, Validators.required),
       email: new FormControl(null, [Validators.required, Validators.email]),
       password: new FormControl(null, [Validators.required, Validators.minLength(8)]),
       confirmPassword: new FormControl(null, [Validators.required]),
       mobile: new FormControl(null, [Validators.required, Validators.maxLength(10)])
     }, this.passwordMatchingValidator);
+
+    this.registrationForm.controls['userName'].setValue('Default Value');
+  }
+
+  passwordMatchingValidator(fg: FormGroup): Validators {
+    return fg.get('password').value === fg.get('confirmPassword').value ? null :
+      { notmatched: true };
   }
 
   get userName() {
@@ -39,11 +46,6 @@ export class UserRegisterComponent implements OnInit {
 
   get mobile() {
     return this.registrationForm.get('mobile') as FormControl;
-  }
-
-  passwordMatchingValidator(fg: FormGroup): Validators {
-    return fg.get('password').value === fg.get('confirmPassword').value ? null :
-      { notmatched: true };
   }
 
   onSubmit() {
