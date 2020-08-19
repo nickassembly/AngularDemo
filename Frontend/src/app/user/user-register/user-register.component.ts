@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { UserServiceService } from 'src/app/services/user-service.service';
+import { User } from 'src/app/model/user';
 
 @Component({
   selector: 'app-user-register',
@@ -9,18 +11,29 @@ import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms'
 export class UserRegisterComponent implements OnInit {
 
   registrationForm: FormGroup;
-  constructor(private fb: FormBuilder) { }
+  user: User;
+  userSubmitted: boolean;
+  constructor(private fb: FormBuilder, private userService: UserServiceService) { }
 
-  ngOnInit(): void {
-    this.registrationForm = new FormGroup({
-      userName: new FormControl(null, Validators.required),
-      email: new FormControl(null, [Validators.required, Validators.email]),
-      password: new FormControl(null, [Validators.required, Validators.minLength(8)]),
-      confirmPassword: new FormControl(null, [Validators.required]),
-      mobile: new FormControl(null, [Validators.required, Validators.maxLength(10)])
-    }, this.passwordMatchingValidator);
+  ngOnInit() {
+    // this.registrationForm = new FormGroup({
+    //   userName: new FormControl(null, Validators.required),
+    //   email: new FormControl(null, [Validators.required, Validators.email]),
+    //   password: new FormControl(null, [Validators.required, Validators.minLength(8)]),
+    //   confirmPassword: new FormControl(null, [Validators.required]),
+    //   mobile: new FormControl(null, [Validators.required, Validators.maxLength(10)])
+    // }, this.passwordMatchingValidator);
+    this.createRegistrationForm();
+  }
 
-    this.registrationForm.controls['userName'].setValue('Default Value');
+  createRegistrationForm() {
+    this.registrationForm = this.fb.group({
+      userName: [null, Validators.required],
+      email: [null, [Validators.required, Validators.email]],
+      password: [null, [Validators.required, Validators.minLength(8)]],
+      confirmPassword: [null, Validators.required],
+      mobile: [null, [Validators.required, Validators.maxLength(10)]]
+    }, { validators: this.passwordMatchingValidator })
   }
 
   passwordMatchingValidator(fg: FormGroup): Validators {
@@ -49,7 +62,24 @@ export class UserRegisterComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.registrationForm);
+    console.log(this.registrationForm.value);
+    this.userSubmitted = true;
+
+    if (this.registrationForm.valid) {
+      // this.user = Object.assign(this.user, this.registrationForm.value);
+      this.userService.addUser(this.user);
+      this.registrationForm.reset();
+      this.userSubmitted = false;
+    }
+  }
+
+  userData(): User {
+    return this.user = {
+      userName: this.userName.value,
+      email: this.email.value,
+      password: this.password.value,
+      mobile: this.mobile.value
+    }
   }
 
 }
